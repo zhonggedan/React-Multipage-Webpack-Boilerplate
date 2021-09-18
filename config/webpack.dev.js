@@ -1,33 +1,21 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const path = require("path");
+const { DefinePlugin } = require("webpack");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-    mode: 'development',
-    devtool: 'source-map',
-    entry: path.resolve(__dirname, '../src/index.js'),
-    module: {
-        rules: [{
-            test: /\.(js)$/,
-            exclude: /node_modules/,
-            use: ['babel-loader'],
-        }],
-    },
-    resolve: {
-        extensions: ['*', '.js'],
-    },
-    output: {
-        path: path.resolve(__dirname, '../dist'),
-        filename: 'bundle.js',
-    },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            title: 'Hello Webpack bundled JavaScript Project',
-            template: path.resolve(__dirname, '../template/index.html'),
-        })
-    ],
-    devServer: {
-        contentBase: path.resolve(__dirname, '../dist'),
-    },
+  mode: "development",
+  devServer: {
+    open: true,
+    allowedHosts: "dev.iflve.com",
+    port: 9000,
+  },
+  plugins: [
+    new DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify("development"),
+    }),
+    new Dotenv({
+      path: path.resolve(__dirname, "..", "./.env.development"),
+    }),
+  ],
+  devtool: "eval-source-map",
 };
