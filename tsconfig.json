@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "outDir": "./dist/",
+      "sourceMap": true,
+      "noImplicitAny": true,
+      "module": "commonjs",
+      "target": "es6",
+      "jsx": "preserve",
+      "allowJs": true,
+      "esModuleInterop": true,
+      "noImplicitThis": true,
+      "skipLibCheck": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*":["src/*"]
+      }
+    },
+    "include": [
+      "./src/**/*"
+    ]
+  }
