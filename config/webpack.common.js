@@ -105,7 +105,7 @@ getEntry().forEach((pathname) => {
       "template",
       "index.html"
     ),
-    publicPath: "./",
+    publicPath: "/",
     chunks: ["manifest", "vendor", pathname],
   };
   commonConfig.plugins.push(new HtmlWebpackPlugin(conf));
