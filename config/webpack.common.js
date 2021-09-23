@@ -1,6 +1,6 @@
 const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { ProvidePlugin } = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const getEntry = require("./utils");
 
@@ -8,7 +8,7 @@ const addEntry = () => {
   let entryObj = {};
   getEntry().forEach((item) => {
     entryObj[item] = {
-      import: path.join(path.dirname(__dirname), "src", item, "index.js"),
+      import: path.join(path.dirname(__dirname), "src", item, "index.jsx"),
       filename: path.join("../dist", item, item) + ".js",
     };
   });
@@ -41,9 +41,16 @@ const commonConfig = {
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader"],
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader", "ts-loader"],
       },
       {
         test: /\.css$/,
@@ -52,16 +59,33 @@ const commonConfig = {
     ],
   },
   resolve: {
-    extensions: ["*", ".js"],
+    extensions: ["*", ".js", ".json", ".jsx", ".ts", ".tsx"],
   },
-  // optimization: {
-  //   splitChunks: {
-  //     chunks: 'async',
-  //     cacheGroups: addCssSplitChunk()
-  //   },
-  // },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+          name: "common",
+          filename: (e) => {
+            return path.join("../dist", "vendors", "common") + ".js";
+          },
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+      // cacheGroups: addCssSplitChunk()
+    },
+  },
   plugins: [
-    new CleanWebpackPlugin(),
+    new ProvidePlugin({
+      React: "react",
+    }),
     new MiniCssExtractPlugin({
       filename: (item) => {
         return path.join("../dist", item.chunk.name, item.chunk.name) + ".css";
@@ -81,6 +105,7 @@ getEntry().forEach((pathname) => {
       "template",
       "index.html"
     ),
+    publicPath: "/",
     chunks: ["manifest", "vendor", pathname],
   };
   commonConfig.plugins.push(new HtmlWebpackPlugin(conf));
