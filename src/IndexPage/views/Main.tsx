@@ -49,6 +49,9 @@ export default function Main({}: Props): React.ReactElement {
           <Route path="/IndexPage">
             <Home />
           </Route>
+          <Route path="/">
+            <Home />
+          </Route>
         </Switch>
       </div>
     </Router>

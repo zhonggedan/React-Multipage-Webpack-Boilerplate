@@ -8,7 +8,6 @@ const rewritesRules = () => {
   getEntry().forEach((pathname) => {
     rewrites.push({ from: `^\/${pathname}`, to: `/${pathname}/index.html` });
   });
-  console.log([{ from: /^\/$/, to: "/IndexPage/index.html" }, ...rewrites]);
   return [
     { from: /^\/$/, to: "/IndexPage/index.html" },
     ...rewrites,
