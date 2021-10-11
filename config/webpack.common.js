@@ -18,7 +18,7 @@ const recursiveIssuer = (m) => {
 const commonConfig = {
   context: path.resolve(path.dirname(__dirname), "src"),
   output: {
-    path: path.resolve(__dirname, "."),
+    path: path.resolve(__dirname, "../dist"),
     publicPath: ''
   },
   module: {
@@ -54,8 +54,7 @@ const commonConfig = {
 
 getEntry().forEach((pathname) => {
   let conf = {
-    filename:
-      path.join(path.dirname(__dirname), "dist", pathname, "index") + ".html",
+    filename: path.join(path.dirname(__dirname), "dist",  pathname, "index") + ".html",
     template: path.join(
       path.dirname(__dirname),
       "src",
@@ -63,7 +62,7 @@ getEntry().forEach((pathname) => {
       "template",
       "index.html"
     ),
-    publicPath: "",
+    publicPath: "../",
     chunks: ["manifest", "vendor", pathname],
   };
   commonConfig.plugins.push(new HtmlWebpackPlugin(conf));

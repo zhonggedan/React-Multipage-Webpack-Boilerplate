@@ -20,7 +20,10 @@ function About() {
 }
 
 function Users() {
-  return <h2>Users</h2>;
+  return <h2>
+    <a href="/Page1">跳转到page1</a>
+    <a href="/Page2">跳转到page2</a>
+  </h2>;
 }
 export default function Main({}: Props): React.ReactElement {
   return (

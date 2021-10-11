@@ -10,7 +10,7 @@ const addEntry = () => {
   getEntry().forEach((item) => {
     entryObj[item] = {
       import: path.join(path.dirname(__dirname), "src", item, "index.jsx"),
-      filename: path.join("../dist", item, item) + ".js",
+      filename: path.join(item, item) + ".js",
     };
   });
   return entryObj;
@@ -28,7 +28,9 @@ module.exports = {
   mode: "production",
   entry: addEntry(),
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns: [
+      path.resolve(__dirname, 'dist'),
+    ]}),
     new DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("production"),
     }),
@@ -37,7 +39,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: (item) => {
-        return path.join("../dist", item.chunk.name, item.chunk.name) + ".css";
+        return path.join(item.chunk.name, item.chunk.name) + ".css";
       },
     }),
   ],
@@ -54,7 +56,7 @@ module.exports = {
           priority: -10,
           name: "common",
           filename: (e) => {
-            return path.join("../dist", "vendors", "common") + ".js";
+            return path.join("vendors", "common") + ".js";
           },
         },
         default: {
