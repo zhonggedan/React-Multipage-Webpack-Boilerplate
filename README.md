@@ -1,12 +1,5 @@
 # Webpack-Boilerplate
 Webpack-Boilerplate
-# 修改了readme 用来测试pull requests
-
-
-新增一行测试fork后代码同步
-
-# 再次新增一个代码同步
-
-三次
-
-提交一个pr
+目前的规划是：搞成完整的项目，
+整个后端渲染的公司官网、用户后台、运营管理的后台等等
+全都放在里面。 随时调整思路，目标全都围绕项目名称展开。
