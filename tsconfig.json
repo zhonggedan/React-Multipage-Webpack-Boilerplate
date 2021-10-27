@@ -5,17 +5,19 @@
       "noImplicitAny": true,
       "module": "commonjs",
       "target": "es6",
+      "strict": true,
       "jsx": "preserve",
       "allowJs": true,
       "esModuleInterop": true,
       "noImplicitThis": true,
       "skipLibCheck": true,
+      "moduleResolution": "node",
       "baseUrl": ".",
       "paths": {
         "@/*":["src/*"]
       }
     },
-    "include": [
-      "./src/**/*"
-    ]
+    "include": ["src","**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules"]
   }
+  

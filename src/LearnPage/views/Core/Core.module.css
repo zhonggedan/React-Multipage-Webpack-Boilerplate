@@ -1,0 +1,7 @@
+.aside{
+  height: 100%;
+}
+.menu {
+  height: 100%;
+  overflow-y: auto;
+}

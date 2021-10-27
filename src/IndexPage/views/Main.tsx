@@ -1,6 +1,7 @@
 import React from "react";
+import Home from './Home'
 import {
-  BrowserRouter as Router,
+  BrowserRouter as Routser,
   Switch,
   Route,
   Link,
@@ -11,9 +12,6 @@ import {
 } from "react-router-dom";
 
 interface Props {}
-function Home() {
-  return <h2>123123</h2>;
-}
 
 function About() {
   return <h2>About1</h2>;
@@ -27,7 +25,7 @@ function Users() {
 }
 export default function Main({}: Props): React.ReactElement {
   return (
-    <Router>
+    <Routser>
       <div>
         <nav>
           <ul>
@@ -57,6 +55,6 @@ export default function Main({}: Props): React.ReactElement {
           </Route>
         </Switch>
       </div>
-    </Router>
+    </Routser>
   );
 }

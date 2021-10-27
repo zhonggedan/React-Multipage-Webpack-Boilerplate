@@ -1,0 +1,9 @@
+.nav{
+  height: 64px;
+  line-height: 64px;
+  box-shadow: 0 2px 8px #f0f1f2;
+}
+.navItem {
+  margin-right: 30px;
+  color: #000000d9;
+}

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { ProvidePlugin } = require("webpack");
 const getEntry = require("./utils");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const devMode = process.env.NODE_ENV !== "production";
 
 const recursiveIssuer = (m) => {
   if (m.issuer) {
@@ -37,12 +37,35 @@ const commonConfig = {
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        exclude: /node_modules\/antd/,
+        use: [
+          // devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                auto: (resourcePath) => resourcePath.endsWith(".module.css"),
+              },
+            }
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins:[require('autoprefixer')],
+                config: false,
+              },
+            },
+          }, 
+        ],
       },
     ],
   },
   resolve: {
     extensions: ["*", ".js", ".json", ".jsx", ".ts", ".tsx"],
+    alias: {
+      '@': path.resolve(__dirname, "../src"),
+    }
   },
   
   plugins: [
