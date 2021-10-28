@@ -1,17 +1,22 @@
 import React, { useRef, useState } from 'react';
 import {useStore} from 'effector-react'
-import { Menu, Button, Layout } from 'antd';
+import { Menu, Button, Layout,Anchor } from 'antd';
 import useMount from 'ahooks/es/useMount';
 import useSafeState from 'ahooks/es/useSafeState';
 import useEventListener from 'ahooks/es/useEventListener';
 import {coreMenu} from '../../data/coreMenu';
 import {$hashTag} from '../../store/dataSource'
-const { SubMenu } = Menu;
 import styles from './Core.module.css';
 import {elementPosition} from '@/utils/common';
 
+import DataType from './components/DataType';
+import TypeConversion from './components/TypeConversion';
+import TypeJudgment from './components/TypeJudgment';
+
 import { Desktop, Tablet, Mobile, Default} from '@/utils/responsive'
 
+const { Link } = Anchor;
+const { SubMenu } = Menu;
 interface Children {
   id: string;
   y: number;
@@ -38,15 +43,15 @@ function Core() {
     setSelectedKey([hashTag])
   })
   useEventListener('scroll', e => {
-    for(let i of childrenDomScrollPos) {
-      let bottom = i.y - 102
-      let top = i.y - i.offsetHeight - 102
-      if (refContainer.current.scrollTop > top && refContainer.current.scrollTop < bottom) {
-        setSelectedKey([i.id])
-        window.location.hash = i.id
-        continue
-      }
-    }
+    // for(let i of childrenDomScrollPos) {
+    //   let bottom = i.y - 102
+    //   let top = i.y - i.offsetHeight - 102
+    //   if (refContainer.current.scrollTop > top && refContainer.current.scrollTop < bottom) {
+    //     setSelectedKey([i.id])
+    //     window.location.hash = i.id
+    //     continue
+    //   }
+    // }
   }, { target: refContainer });
   const menuItemClick = (e:any) => {
     setSelectedKey([e.key])
@@ -77,9 +82,15 @@ function Core() {
             </Sider>
             <Content style={{height: "100%"}}>
               <div style={{overflowY:'auto', height: "100%"}} ref={refContainer}>
-                <div id='datatype1' style={{height: '700px'}}>数据类型</div>
-                <div id='datatype2' style={{height: '700px'}}>类型转化</div>
-                <div id='datatype3' style={{height: '700px'}}>类型判断</div>
+                <div id='datatype1'>
+                  <DataType></DataType>
+                </div>
+                <div id='datatype2'>
+                  <TypeConversion></TypeConversion>
+                </div>
+                <div id='datatype3'>
+                  <TypeJudgment></TypeJudgment>
+                </div>
                 <div id='base1' style={{height: '700px'}}>this</div>
                 <div id='base2' style={{height: '700px'}}>闭包</div>
                 <div id='base3' style={{height: '700px'}}>作用域</div>
